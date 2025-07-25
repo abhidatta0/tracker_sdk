@@ -1,4 +1,14 @@
-const Cart = ({cart}) => {
+import { useNavigate } from "react-router-dom"
+import {myTracker} from '../../../src/index';
+
+const Cart = ({cart, setCart}) => {
+  const navigate = useNavigate();
+  const logout = ()=>{
+    setCart([]);
+    myTracker.track('logout')
+    myTracker.reset();
+    navigate('/', {replace: true})
+  }
   return (
     <div>
         <h2>Cart Items</h2>
@@ -10,6 +20,9 @@ const Cart = ({cart}) => {
                 </div>
             ))
         }
+
+        <button onClick={logout} style={{color:'red'}}>Logout</button>
+
     </div>
   )
 }

@@ -51,11 +51,9 @@ class MyTracker{
   }
 
   reset(){
-    this.#anonymousId = null;
-    this.#userId = null;
     console.info("resetted");
-    this.#persistAnonymousID(null);
-    this.#persistUserID(null);
+    this.#removeAnonymousID();
+    this.#removeUserID();
   }
 
   #checkIfAnonymousIdOrUserIsDefined(){
@@ -76,6 +74,16 @@ class MyTracker{
   
   getUserId = (id)=>{
     return localStorage.getItem(USER_ID_KEY,id)
+  }
+
+  #removeUserID = (id)=>{
+    this.#userId = null;
+    localStorage.removeItem(USER_ID_KEY)
+  }
+
+   #removeAnonymousID = (id)=>{
+    this.#anonymousId = null;
+    localStorage.removeItem(ANONYMOUS_ID_KEY)
   }
 
 };
