@@ -1,0 +1,61 @@
+
+class MyTracker{
+
+  #clientKey;
+  #anonymousId;
+  #userId;
+
+  init(clientKey){
+    this.#clientKey = clientKey;
+    console.log("calling init");
+    this.#anonymousId = `anon_${new Date().getTime()}`;
+    return this.#anonymousId;
+  }
+
+  identify(userId, traits){
+    this.#userId = userId;
+    if(this.#checkIfAnonymousIdOrUserIsDefined()){
+       // api call to send the traits
+        console.log("called identify");
+
+    }
+   
+  }
+
+  track(event, properties) {
+    if(this.#checkIfAnonymousIdOrUserIsDefined()){
+        // get user data by the userId from db
+        const user = {
+            id: "user_123",
+            traits: { email: "alice@example.com" }
+        }
+
+        console.log("logged event ", event);
+        console.log({
+        clientKey: this.#clientKey,
+        event: event,
+        anonymousId: this.#anonymousId,
+        user,
+        properties,
+        timestamp: new Date().getTime()
+    });
+        console.log("called track");
+
+    }
+
+   
+  }
+
+  reset(){
+    this.#anonymousId = null;
+    this.#userId = null;
+    console.info("resetted");
+  }
+
+  #checkIfAnonymousIdOrUserIsDefined(){
+    return this.#anonymousId && this.#userId;
+  }
+
+};
+
+export const myTracker = new MyTracker();
