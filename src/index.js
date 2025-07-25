@@ -1,3 +1,5 @@
+const ANONYMOUS_ID_KEY = 'TRACKER_ANONYMOUS_ID_KEY';
+const USER_ID_KEY = 'TRACKER_USER_ID_KEY';
 
 class MyTracker{
 
@@ -9,6 +11,7 @@ class MyTracker{
     this.#clientKey = clientKey;
     console.log("calling init");
     this.#anonymousId = `anon_${new Date().getTime()}`;
+    this.#persistAnonymousID(this.#anonymousId);
     return this.#anonymousId;
   }
 
@@ -17,6 +20,7 @@ class MyTracker{
     if(this.#checkIfAnonymousIdOrUserIsDefined()){
        // api call to send the traits
         console.log("called identify");
+        this.#persistUserID(userId);
 
     }
    
@@ -50,10 +54,28 @@ class MyTracker{
     this.#anonymousId = null;
     this.#userId = null;
     console.info("resetted");
+    this.#persistAnonymousID(null);
+    this.#persistUserID(null);
   }
 
   #checkIfAnonymousIdOrUserIsDefined(){
     return this.#anonymousId && this.#userId;
+  }
+
+  #persistAnonymousID(id){
+    localStorage.setItem(ANONYMOUS_ID_KEY,id)
+  }
+  
+  getAnonymousId(id){
+    return localStorage.getItem(ANONYMOUS_ID_KEY,id)
+  }
+  
+  #persistUserID = (id)=>{
+    localStorage.setItem(USER_ID_KEY,id)
+  }
+  
+  getUserId = (id)=>{
+    return localStorage.getItem(USER_ID_KEY,id)
   }
 
 };
