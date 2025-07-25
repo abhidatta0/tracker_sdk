@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import {myTracker} from '../../../src/index';
+import {myTracker} from 'tracker_sdk';
 
 const Cart = ({cart, setCart}) => {
   const navigate = useNavigate();

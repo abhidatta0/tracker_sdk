@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {myTracker} from '../../../src/index';
+import {myTracker} from 'tracker_sdk';
 
 function Login() {
     const navigate = useNavigate();
